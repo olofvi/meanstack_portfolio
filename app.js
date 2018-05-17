@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const profile = require('profile')
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/profile',profile);
+
 app.get('/', (req,res) => {
     res.send("Invalid page");
 })
@@ -22,3 +25,6 @@ app.get('/', (req,res) => {
 app.listen(port, () => {
     console.log(`Starting the server at port ${port}`);
 });
+
+const config = require('./config/database');
+mongoose.connect(config.database);
